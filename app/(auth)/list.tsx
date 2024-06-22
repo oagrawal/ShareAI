@@ -7,6 +7,9 @@ import * as FileSystem from 'expo-file-system'
 import { decode } from 'base64-arraybuffer'
 import { supabase } from '../../config/initSupabase'
 import { FileObject } from '@supabase/storage-js'
+import ImageItem from '../../components/ImageItem'
+
+
 
 const list = () => {
   const { user } = useAuth()
@@ -19,6 +22,14 @@ const list = () => {
     loadImages()
   }, [user])
 
+  const onRemoveImage = async (item: FileObject, listIndex: number) => {
+    supabase.storage.from('files').remove([`${user!.id}/${item.name}`])
+    const newFiles = [...files]
+    newFiles.splice(listIndex, 1)
+    setFiles(newFiles)
+  }
+  
+  
   const loadImages = async () => {
     const { data } = await supabase.storage.from('files').list(user!.id)
     if (data) {
@@ -27,17 +38,44 @@ const list = () => {
   }
 
   const onSelectImage = async () => {
-    // TODO
-  }
+    const options: ImagePicker.ImagePickerOptions = {
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+    };
+
+    const result = await ImagePicker.launchImageLibraryAsync(options);
+
+    // Save image if not cancelled
+    if (!result.canceled) {
+      const img = result.assets[0];
+      const base64 = await FileSystem.readAsStringAsync(img.uri, { encoding: 'base64' });
+      const filePath = `${user!.id}/${new Date().getTime()}.${img.type === 'image' ? 'png' : 'mp4'}`;
+      const contentType = img.type === 'image' ? 'image/png' : 'video/mp4';
+      await supabase.storage.from('files').upload(filePath, decode(base64), { contentType });
+      loadImages();
+    }
+  };
 
   return (
     <View style={styles.container}>
+      <ScrollView>
+        {files.map((item, index) => (
+          <ImageItem
+            key={item.id}
+            item={item}
+            userId={user!.id}
+            onRemoveImage={() => onRemoveImage(item, index)}
+          />
+        ))}
+      </ScrollView>
+  
       {/* FAB to add images */}
       <TouchableOpacity onPress={onSelectImage} style={styles.fab}>
         <Ionicons name="camera-outline" size={30} color={'#fff'} />
       </TouchableOpacity>
     </View>
   )
+  
 }
 
 const styles = StyleSheet.create({
