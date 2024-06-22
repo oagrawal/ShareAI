@@ -4,7 +4,7 @@ import { supabase } from '../config/initSupabase'
 import { useState } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 
-// Image item component that displays the image from Supabase Storage and a delte button
+// Image item component that displays the image from Supabase Storage and a delete button
 const ImageItem = ({
   item,
   userId,
