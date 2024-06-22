@@ -3,6 +3,7 @@ import { useAuth } from '../../provider/AuthProvider'
 import React from 'react'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
+import { FontAwesome6 } from '@expo/vector-icons';
 
 // Simple stack layout within the authenticated area
 const StackLayout = () => {
@@ -20,6 +21,11 @@ const StackLayout = () => {
       <Stack.Screen
         name="list"
         options={{
+          headerLeft: () => (
+            <TouchableOpacity onPress={signOut}>
+            <FontAwesome6 name="face-laugh" size={30} color={'#fff'} />
+            </TouchableOpacity>
+          ),
           headerTitle: 'My Files',
           headerRight: () => (
             <TouchableOpacity onPress={signOut}>
