@@ -58,6 +58,7 @@ const list = () => {
 
   return (
     <View style={styles.container}>
+        
       <ScrollView>
         {files.map((item, index) => (
           <ImageItem
@@ -69,7 +70,6 @@ const list = () => {
         ))}
       </ScrollView>
   
-      {/* FAB to add images */}
       <TouchableOpacity onPress={onSelectImage} style={styles.fab}>
         <Ionicons name="camera-outline" size={30} color={'#fff'} />
       </TouchableOpacity>
