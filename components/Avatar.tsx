@@ -22,9 +22,13 @@ export default function Avatar({ url, size = 150, onUpload }: Props) {
 
   async function downloadImage(path: string) {
     try {
+      // setUploading(false);
+
       const { data, error } = await supabase.storage
         .from("files")
         .download(path);
+
+      // console.log(`path at the start of downloadImage: ${path}`);
 
       //   const { data, error } = await supabase.storage
       //     .from("files")
@@ -39,9 +43,11 @@ export default function Avatar({ url, size = 150, onUpload }: Props) {
       fr.onload = () => {
         setAvatarUrl(fr.result as string);
       };
+      // setUploading(false);
     } catch (error) {
       if (error instanceof Error) {
-        console.log("Error downloading image: ", error.message);
+        // console.log("Error downloading image: ", error.message);
+        console.log("Error downloading image");
       }
     }
   }
@@ -59,7 +65,8 @@ export default function Avatar({ url, size = 150, onUpload }: Props) {
       });
 
       if (result.canceled || !result.assets || result.assets.length === 0) {
-        console.log("User cancelled image picker.");
+        // console.log("User cancelled image picker.");
+        console.log("error at uploadAvatar");
         return;
       }
 
@@ -94,14 +101,52 @@ export default function Avatar({ url, size = 150, onUpload }: Props) {
             }
          };
 
+
+         await supabase.storage.from('bucket_name').upload('file_path', file, {
+            upsert: true,
+          })
+
+
       */
 
-      const fileExt = image.uri?.split(".").pop()?.toLowerCase() ?? "jpeg";
-      const path = `${user!.id}/avatar/${new Date().getTime()}.${fileExt}`;
+      // const fileExt = image.uri?.split(".").pop()?.toLowerCase() ?? "jpeg";
+      // const path = `${user!.id}/avatar/${user!.id}_avatar.${fileExt}`;
+      // const path = `${user!.id}/avatar/${new Date().getTime()}.${fileExt}`;
+      // if (){
+
+      // }
+      // List and delete all files in the avatar directory
+      const { data: listData, error: listError } = await supabase.storage
+        .from("files")
+        .list(`${user!.id}/avatar/`);
+
+      if (listError) {
+        throw listError;
+      }
+
+      if (listData && listData.length > 0) {
+        // Start deleting from index 0
+        console.log("deleting files!");
+        for (let i = 0; i < listData.length; i++) {
+          const file = listData[i];
+          console.log(`trying to remove ${user!.id}/avatar/${file.name}`);
+
+          const { error: deleteError } = await supabase.storage
+            .from("files")
+            .remove([`${user!.id}/avatar/${file.name}`]);
+
+          if (deleteError) {
+            throw deleteError;
+          }
+        }
+      }
+      const path = `${user!.id}/avatar/${new Date().getTime()}.png`;
+
       const { data, error: uploadError } = await supabase.storage
         .from("files")
         .upload(path, arraybuffer, {
-          contentType: image.mimeType ?? "image/jpeg",
+          contentType: image.mimeType ?? "image/png",
+          // upsert: true,
         });
 
       if (uploadError) {
@@ -109,6 +154,7 @@ export default function Avatar({ url, size = 150, onUpload }: Props) {
       }
 
       onUpload(data.path);
+      if (url) downloadImage(url);
     } catch (error) {
       if (error instanceof Error) {
         Alert.alert(error.message);
@@ -119,6 +165,8 @@ export default function Avatar({ url, size = 150, onUpload }: Props) {
       setUploading(false);
     }
   }
+
+  // console.log(`avatarUrl before returning avatar = ${avatarUrl}`);
 
   return (
     <View>
@@ -133,7 +181,7 @@ export default function Avatar({ url, size = 150, onUpload }: Props) {
       )}
       <View>
         <Button
-          title={uploading ? "Uploading ..." : "Upload"}
+          title={uploading ? "Uploading ..." : "Upload Profile Picture"}
           onPress={uploadAvatar}
           disabled={uploading}
         />
