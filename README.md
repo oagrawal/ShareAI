@@ -6,10 +6,10 @@ with all recognized friends.
 
 Technologies: React Native, Typescript, Supabase, Python, DeepFace
 
-Demo:
+Demo:\
 https://github.com/oagrawal/ShareAI/assets/19733435/e71ac635-d63e-47bc-9e19-7e4add726cd6
 
-Facial Recognition:
+Facial Recognition:\
 ![image](https://github.com/oagrawal/ShareAI/assets/19733435/dbf43110-c9be-4418-ab66-f1240bb82f81)
 
 
