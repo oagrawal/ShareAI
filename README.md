@@ -1,22 +1,24 @@
 ## ShareAI
 (previously PhotoConnect)
 
-Engineered an AI-powered photo sharing application, utilizing facial recognition for automatic photo sharing
-with all recognized friends. 
+Engineered an AI-powered photo sharing application, utilizing facial recognition for automatic photo sharing with all recognized friends.
 
-Technologies: React Native, Typescript, Supabase, Python, DeepFace
+**Technologies:** React Native, Typescript, Supabase, Python, DeepFace
 
-Video Demo:\
+![Screenshot 2025-02-21 084640](https://github.com/user-attachments/assets/65eab899-8b1e-4f56-bba9-56f6c573ebff)
+
+![Screenshot 2025-02-21 084650](https://github.com/user-attachments/assets/7bc8b11c-e116-4f9f-bc47-2b9e031ebdf6)
+
+Video Demo:
 https://github.com/oagrawal/ShareAI/assets/19733435/6c0166b4-9c4e-4e44-b0ad-3b863a28eb2d
 
+### Planned Features
 
-Facial Recognition:\
-![image](https://github.com/oagrawal/ShareAI/assets/19733435/dbf43110-c9be-4418-ab66-f1240bb82f81)
-
-
-ShareAI is like any other social media app. Users are able to make a personal account, expand their network of friends, 
-and send images to people in their friend group. Users first can upload the image to their account to be stored on the cloud 
-database associated to them. Then users can press a button that runs a facial recognition to detect the set of friends the 
-picture needs to be sent to. Once the user hits send, the images are sent to the set of friends recognized.
-
-
+*   **Automated Photo Sharing:** Using facial recognition, we automatically detect your friends in photos and suggest sharing with the right people—all with just one tap.
+*   **Smarter Photo Library:** Photos are organized intelligently: similar images are grouped, events are automatically created, and unwanted photos like screenshots are hidden.
+*   **AI Photo Scoring:** No more scrolling through hundreds of similar photos. We'll pick the ones that make you look your best for easy sharing on Instagram or other platforms.
+*   **Purge Junk Photos:** Automatically identify and delete clutter from your library, including screenshots, documents, saved TikToks, blurry photos, duplicates, and more.
+*   **Shared Albums:** Create albums with friends and family and let us suggest photos to add based on who’s in them, making album creation effortless.
+*   **Find The Moments You Care About:** Smart search helps you find photos by location, date, people, and objects. Photos are automatically tagged with mood, holidays, vacations, events, and more.
+*   **Relive Your Memories:** We'll automatically create customizable photo stories, slideshows, and collages for you to share with friends and family.
+*   **Secure Cloud Backup:** Your photos are securely backed up to the cloud, so you never have to worry about losing them. Access them from anywhere, anytime, on any device.
