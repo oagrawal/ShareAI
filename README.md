@@ -1,5 +1,5 @@
-## ShareAI
-(previously PhotoConnect)
+## Snapbox
+(previously ShareAI)
 
 Engineered an AI-powered photo sharing application, utilizing facial recognition for automatic photo sharing with all recognized friends.
 
